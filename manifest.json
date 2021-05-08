@@ -1,0 +1,11 @@
+{
+  "name": "Zwitch to...",
+  "id": "972533077037860848",
+  "api": "1.0.0",
+  "main": "code.js",
+  "menu": [
+    {"name": "Android", "command": "android"},
+    {"name": "iOS", "command": "ios"},
+    {"name": "Web", "command": "web"}
+  ]
+}
