@@ -91,6 +91,10 @@ function swap() {
       textNodes.forEach(textNode => {
         swapText(textNode)
       })
+    } else if (selection.type == "TEXT") {
+      //If selection is a text layer...
+      //...just switch it...
+      swapText(selection)
     }
   })
   figma.closePlugin()
@@ -291,6 +295,7 @@ function swap() {
 async function importStyles() {
   let testText = figma.createText()
   try {
+    //TODO maybe we should show some UI here, to let users know the import is happening?
     //TODO Should we reset the IDs, in case they change?
     await figma.importStyleByKeyAsync(WEB_SMALL)
     await figma.importStyleByKeyAsync(WEB_MEDIUM)
