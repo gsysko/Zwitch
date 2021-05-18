@@ -1,4 +1,5 @@
 //Font style constants
+//TODO should we look up style IDs every time, instead of hard coding them?
 const WEB_SMALL_ID = "S:ee895ec978f925d906ebf5a8d3c4aec40817edcd,103:1"
 const WEB_MEDIUM_ID = "S:237497a4fee5126f04c9af39b149e47fa9be5b5e,103:8"
 const WEB_LARGE_ID = "S:afd7691e371b665f6f378dea9ada5f41a4fefe97,103:14"
@@ -69,37 +70,26 @@ async function temp() {
 
 async function swap() {
   let selectionSet = figma.currentPage.selection
-  selectionSet.forEach(async selection => {
-    if (selection.type == "INSTANCE") {
-      //If selection is a component instance...
-      //Find all its text layer children...
-      let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
-      //...and for each one...
-      textNodes.forEach(async textNode => {
-        await swapText(textNode)
-      })
-    } else if (selection.type == "FRAME") {
-      //If selection is a frame...
-      //Find all its text layer children...
-      let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
-      //...and for each one...
-      textNodes.forEach(async textNode => {
-        await swapText(textNode)
-      })
-    } else if (selection.type == "GROUP") {
-      //If selection is a frame...
-      //Find all its text layer children...
-      let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
-      //...and for each one...
-      textNodes.forEach(async textNode => {
-        await swapText(textNode)
-      })
-    } else if (selection.type == "TEXT") {
+  await Promise.all(selectionSet.map(async selection => {
+    switch (selection.type) {
+      //If selection is a component instance, group or frame...
+      case "INSTANCE":
+      case "FRAME":
+      case "GROUP":
+        //Find all its text layer children...
+        let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
+        //...and for each one...
+        await Promise.all(textNodes.map(async textNode => {
+          await swapText(textNode)
+        }))
+        break
       //If selection is a text layer...
-      //...just switch it...
-      await swapText(selection)
+      case "TEXT":
+        //...just switch it...
+        await swapText(selection)
+        break
     }
-  })
+  }))
 
   async function swapText(textNode: TextNode) {
     switch (textNode.textStyleId) {

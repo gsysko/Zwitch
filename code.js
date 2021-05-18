@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 //Font style constants
+//TODO should we look up style IDs every time, instead of hard coding them?
 const WEB_SMALL_ID = "S:ee895ec978f925d906ebf5a8d3c4aec40817edcd,103:1";
 const WEB_MEDIUM_ID = "S:237497a4fee5126f04c9af39b149e47fa9be5b5e,103:8";
 const WEB_LARGE_ID = "S:afd7691e371b665f6f378dea9ada5f41a4fefe97,103:14";
@@ -77,40 +78,26 @@ function temp() {
 function swap() {
     return __awaiter(this, void 0, void 0, function* () {
         let selectionSet = figma.currentPage.selection;
-        selectionSet.forEach((selection) => __awaiter(this, void 0, void 0, function* () {
-            if (selection.type == "INSTANCE") {
-                //If selection is a component instance...
-                //Find all its text layer children...
-                let textNodes = selection.findAll(node => node.type == "TEXT");
-                //...and for each one...
-                textNodes.forEach((textNode) => __awaiter(this, void 0, void 0, function* () {
-                    yield swapText(textNode);
-                }));
-            }
-            else if (selection.type == "FRAME") {
-                //If selection is a frame...
-                //Find all its text layer children...
-                let textNodes = selection.findAll(node => node.type == "TEXT");
-                //...and for each one...
-                textNodes.forEach((textNode) => __awaiter(this, void 0, void 0, function* () {
-                    yield swapText(textNode);
-                }));
-            }
-            else if (selection.type == "GROUP") {
-                //If selection is a frame...
-                //Find all its text layer children...
-                let textNodes = selection.findAll(node => node.type == "TEXT");
-                //...and for each one...
-                textNodes.forEach((textNode) => __awaiter(this, void 0, void 0, function* () {
-                    yield swapText(textNode);
-                }));
-            }
-            else if (selection.type == "TEXT") {
+        yield Promise.all(selectionSet.map((selection) => __awaiter(this, void 0, void 0, function* () {
+            switch (selection.type) {
+                //If selection is a component instance, group or frame...
+                case "INSTANCE":
+                case "FRAME":
+                case "GROUP":
+                    //Find all its text layer children...
+                    let textNodes = selection.findAll(node => node.type == "TEXT");
+                    //...and for each one...
+                    yield Promise.all(textNodes.map((textNode) => __awaiter(this, void 0, void 0, function* () {
+                        yield swapText(textNode);
+                    })));
+                    break;
                 //If selection is a text layer...
-                //...just switch it...
-                yield swapText(selection);
+                case "TEXT":
+                    //...just switch it...
+                    yield swapText(selection);
+                    break;
             }
-        }));
+        })));
         function swapText(textNode) {
             return __awaiter(this, void 0, void 0, function* () {
                 switch (textNode.textStyleId) {
