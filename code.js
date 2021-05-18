@@ -68,301 +68,271 @@ const ANDROID_LARGE = "4a64c8033dcc608fe9c88cb0850d0129eb866bc5"; //Body 1
 const ANDROID_XLARGE = "49a2ca0d4065198f32051c3f2d897cbfb4e15cee"; //Headline 6
 const ANDROID_XXLARGE = "56303f2b9aeafbbd72c84c2d5614010157e34abb"; //Headline 5
 const ANDROID_XXXLARGE = "eeb79754f104dec940500a208f02d7e5b60cc204"; //Headline 4
-importStyles();
-function swap() {
-    let selectionSet = figma.currentPage.selection;
-    selectionSet.forEach(selection => {
-        if (selection.type == "INSTANCE") {
-            //If selection is a component instance...
-            //Find all its text layer children...
-            let textNodes = selection.findAll(node => node.type == "TEXT");
-            //...and for each one...
-            textNodes.forEach(textNode => {
-                swapText(textNode);
-            });
-        }
-        else if (selection.type == "FRAME") {
-            //If selection is a frame...
-            //Find all its text layer children...
-            let textNodes = selection.findAll(node => node.type == "TEXT");
-            //...and for each one...
-            textNodes.forEach(textNode => {
-                swapText(textNode);
-            });
-        }
-        else if (selection.type == "GROUP") {
-            //If selection is a frame...
-            //Find all its text layer children...
-            let textNodes = selection.findAll(node => node.type == "TEXT");
-            //...and for each one...
-            textNodes.forEach(textNode => {
-                swapText(textNode);
-            });
-        }
-        else if (selection.type == "TEXT") {
-            //If selection is a text layer...
-            //...just switch it...
-            swapText(selection);
-        }
-    });
-    figma.closePlugin();
-    function swapText(textNode) {
-        switch (textNode.textStyleId) {
-            //--Regular Styles--//
-            //...if it is 'Small/Default' Garden style, or equivalent...
-            case WEB_SMALL_ID:
-            case ANDROID_SMALL_ID:
-            case IOS_SMALL_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Caption 1'.
-                    textNode.textStyleId = IOS_SMALL_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to 'Caption'.
-                    textNode.textStyleId = ANDROID_SMALL_ID;
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'Small/Default'.
-                    textNode.textStyleId = WEB_SMALL_ID;
-                }
-                break;
-            //...if it is 'Medium/Default' Garden style, or equivalent...
-            case WEB_MEDIUM_ID:
-            case ANDROID_MEDIUM_ID:
-            case IOS_MEDIUM_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Subhead'.
-                    textNode.textStyleId = IOS_MEDIUM_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to 'Body 2'.
-                    textNode.textStyleId = ANDROID_MEDIUM_ID;
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'Medium/Default'.
-                    textNode.textStyleId = WEB_MEDIUM_ID;
-                }
-                break;
-            //...if it is 'Large/Default' Garden style, or equivalent...
-            case WEB_LARGE_ID:
-            case ANDROID_LARGE_ID:
-            case IOS_LARGE_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Body'.
-                    textNode.textStyleId = IOS_LARGE_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to 'Body 1'.
-                    textNode.textStyleId = ANDROID_LARGE_ID;
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'Large/Default'.
-                    textNode.textStyleId = WEB_LARGE_ID;
-                }
-                break;
-            //...if it is 'XLarge/Default' Garden style, or equivalent...
-            case WEB_XLARGE_ID:
-            case ANDROID_XLARGE_ID:
-            case IOS_XLARGE_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Title 2'.
-                    textNode.textStyleId = IOS_XLARGE_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to 'Headline 6'.
-                    textNode.textStyleId = ANDROID_XLARGE_ID;
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'XLarge/Default'.
-                    textNode.textStyleId = WEB_XLARGE_ID;
-                }
-                break;
-            //...if it is 'XXLarge/Default' Garden style, or equivalent...
-            case WEB_XXLARGE_ID:
-            case ANDROID_XXLARGE_ID:
-            case IOS_XXLARGE_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Title 1'.
-                    textNode.textStyleId = IOS_XXLARGE_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to 'Headline 5'.
-                    textNode.textStyleId = ANDROID_XXLARGE_ID;
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'XXLarge/Default'.
-                    textNode.textStyleId = WEB_XXLARGE_ID;
-                }
-                break;
-            //...if it is 'XXXLarge/Default' Garden style, or equivalent...
-            case WEB_XXXLARGE_ID:
-            case ANDROID_XXXLARGE_ID:
-            case IOS_XXXLARGE_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Large Title'.
-                    textNode.textStyleId = IOS_XXXLARGE_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to 'Headline 4'.
-                    textNode.textStyleId = ANDROID_XXXLARGE_ID;
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'XXXLarge/Default'.
-                    textNode.textStyleId = WEB_XXXLARGE_ID;
-                }
-                break;
-            //--Bold Styles--//
-            //...if it is 'Small/Bold' Garden style, or equivalent...
-            //TODO Need to account for android styles that have been bolded
-            case WEB_SMALL_BOLD_ID:
-            case IOS_SMALL_BOLD_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Caption 1'.
-                    textNode.textStyleId = IOS_SMALL_BOLD_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to '_'.
-                    textNode.textStyleId = ANDROID_SMALL_ID;
-                    //TODO: Make bold
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'Small/Bold'.
-                    textNode.textStyleId = WEB_SMALL_BOLD_ID;
-                }
-                break;
-            //...if it is 'Medium/Bold' Garden style, or equivalent...
-            case WEB_MEDIUM_BOLD_ID:
-            case IOS_MEDIUM_BOLD_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Subhead'.
-                    textNode.textStyleId = IOS_MEDIUM_BOLD_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to '_'.
-                    textNode.textStyleId = ANDROID_MEDIUM_ID;
-                    //TODO: Make bold
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'Medium/Bold'.
-                    textNode.textStyleId = WEB_MEDIUM_BOLD_ID;
-                }
-                break;
-            //...if it is 'Large/Bold' Garden style, or equivalent...
-            case WEB_LARGE_BOLD_ID:
-            case IOS_LARGE_BOLD_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Body'.
-                    textNode.textStyleId = IOS_LARGE_BOLD_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to '_'.
-                    textNode.textStyleId = ANDROID_LARGE_ID;
-                    //TODO: Make bold
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'Large/Bold'.
-                    textNode.textStyleId = WEB_LARGE_BOLD_ID;
-                }
-                break;
-            //...if it is 'XLarge/Bold' Garden style, or equivalent...
-            case WEB_XLARGE_BOLD_ID:
-            case IOS_XLARGE_BOLD_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Title 2'.
-                    textNode.textStyleId = IOS_XLARGE_BOLD_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to '_'.
-                    textNode.textStyleId = ANDROID_XLARGE_ID;
-                    //TODO: Make bold
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'XLarge/Bold'.
-                    textNode.textStyleId = WEB_XLARGE_BOLD_ID;
-                }
-                break;
-            //...if it is 'XXLarge/Bold' Garden style, or equivalent...
-            case WEB_XXLARGE_BOLD_ID:
-            case IOS_XXLARGE_BOLD_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Title 1'.
-                    textNode.textStyleId = IOS_XXLARGE_BOLD_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to '_'.
-                    textNode.textStyleId = ANDROID_XXLARGE_ID;
-                    //TODO: Make bold
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'XXLarge/Bold'.
-                    textNode.textStyleId = WEB_XXLARGE_BOLD_ID;
-                }
-                break;
-            //...if it is 'XXXLarge/Bold' Garden style, or equivalent...
-            case WEB_XXXLARGE_BOLD_ID:
-            case IOS_XXXLARGE_BOLD_ID:
-                if (figma.command == "ios") {
-                    //...swap to 'Large Title'.
-                    textNode.textStyleId = IOS_XXXLARGE_BOLD_ID;
-                }
-                else if (figma.command == "android") {
-                    //...swap to '_'.
-                    textNode.textStyleId = ANDROID_XXXLARGE_ID;
-                    //TODO: Make bold
-                }
-                else if (figma.command == "web") {
-                    //...swap to 'XXXLarge/Bold'.
-                    textNode.textStyleId = WEB_XXXLARGE_BOLD_ID;
-                }
-                break;
-        }
-    }
-}
-// Make sure to close the plugin when you're done. Otherwise the plugin will
-// keep running, which shows the cancel button at the bottom of the screen.
-// figma.closePlugin();
-function importStyles() {
+temp();
+function temp() {
     return __awaiter(this, void 0, void 0, function* () {
-        let testText = figma.createText();
-        try {
-            //TODO maybe we should show some UI here, to let users know the import is happening?
-            //TODO Should we reset the IDs, in case they change?
-            yield figma.importStyleByKeyAsync(WEB_SMALL);
-            yield figma.importStyleByKeyAsync(WEB_MEDIUM);
-            yield figma.importStyleByKeyAsync(WEB_LARGE);
-            yield figma.importStyleByKeyAsync(WEB_XLARGE);
-            yield figma.importStyleByKeyAsync(WEB_XXLARGE);
-            yield figma.importStyleByKeyAsync(WEB_XXXLARGE);
-            yield figma.importStyleByKeyAsync(WEB_SMALL_BOLD);
-            yield figma.importStyleByKeyAsync(WEB_MEDIUM_BOLD);
-            yield figma.importStyleByKeyAsync(WEB_LARGE_BOLD);
-            yield figma.importStyleByKeyAsync(WEB_XLARGE_BOLD);
-            yield figma.importStyleByKeyAsync(WEB_XXLARGE_BOLD);
-            yield figma.importStyleByKeyAsync(WEB_XXXLARGE_BOLD);
-            yield figma.importStyleByKeyAsync(IOS_SMALL);
-            yield figma.importStyleByKeyAsync(IOS_MEDIUM);
-            yield figma.importStyleByKeyAsync(IOS_LARGE);
-            yield figma.importStyleByKeyAsync(IOS_XLARGE);
-            yield figma.importStyleByKeyAsync(IOS_XXLARGE);
-            yield figma.importStyleByKeyAsync(IOS_XXXLARGE);
-            yield figma.importStyleByKeyAsync(IOS_SMALL_BOLD);
-            yield figma.importStyleByKeyAsync(IOS_MEDIUM_BOLD);
-            yield figma.importStyleByKeyAsync(IOS_LARGE_BOLD);
-            yield figma.importStyleByKeyAsync(IOS_XLARGE_BOLD);
-            yield figma.importStyleByKeyAsync(IOS_XXLARGE_BOLD);
-            yield figma.importStyleByKeyAsync(IOS_XXXLARGE_BOLD);
-            yield figma.importStyleByKeyAsync(ANDROID_SMALL);
-            yield figma.importStyleByKeyAsync(ANDROID_MEDIUM);
-            yield figma.importStyleByKeyAsync(ANDROID_LARGE);
-            yield figma.importStyleByKeyAsync(ANDROID_XLARGE);
-            yield figma.importStyleByKeyAsync(ANDROID_XXLARGE);
-            yield figma.importStyleByKeyAsync(ANDROID_XXXLARGE);
-            // Styles all present and accounted for!
-            swap();
-        }
-        catch (error) {
-            figma.notify("Font styles are missing!");
-            console.log(error);
+        yield swap().then(() => { figma.closePlugin(); });
+    });
+}
+function swap() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let selectionSet = figma.currentPage.selection;
+        selectionSet.forEach((selection) => __awaiter(this, void 0, void 0, function* () {
+            if (selection.type == "INSTANCE") {
+                //If selection is a component instance...
+                //Find all its text layer children...
+                let textNodes = selection.findAll(node => node.type == "TEXT");
+                //...and for each one...
+                textNodes.forEach((textNode) => __awaiter(this, void 0, void 0, function* () {
+                    yield swapText(textNode);
+                }));
+            }
+            else if (selection.type == "FRAME") {
+                //If selection is a frame...
+                //Find all its text layer children...
+                let textNodes = selection.findAll(node => node.type == "TEXT");
+                //...and for each one...
+                textNodes.forEach((textNode) => __awaiter(this, void 0, void 0, function* () {
+                    yield swapText(textNode);
+                }));
+            }
+            else if (selection.type == "GROUP") {
+                //If selection is a frame...
+                //Find all its text layer children...
+                let textNodes = selection.findAll(node => node.type == "TEXT");
+                //...and for each one...
+                textNodes.forEach((textNode) => __awaiter(this, void 0, void 0, function* () {
+                    yield swapText(textNode);
+                }));
+            }
+            else if (selection.type == "TEXT") {
+                //If selection is a text layer...
+                //...just switch it...
+                yield swapText(selection);
+            }
+        }));
+        function swapText(textNode) {
+            return __awaiter(this, void 0, void 0, function* () {
+                switch (textNode.textStyleId) {
+                    //--Regular Styles--//
+                    //...if it is 'Small/Default' Garden style, or equivalent...
+                    case WEB_SMALL_ID:
+                    case ANDROID_SMALL_ID:
+                    case IOS_SMALL_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Caption 1'.
+                            yield swapStyle(IOS_SMALL);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to 'Caption'.
+                            yield swapStyle(ANDROID_SMALL);
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'Small/Default'.
+                            yield swapStyle(WEB_SMALL);
+                        }
+                        break;
+                    //...if it is 'Medium/Default' Garden style, or equivalent...
+                    case WEB_MEDIUM_ID:
+                    case ANDROID_MEDIUM_ID:
+                    case IOS_MEDIUM_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Subhead'.
+                            yield swapStyle(IOS_MEDIUM);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to 'Body 2'.
+                            yield swapStyle(ANDROID_MEDIUM);
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'Medium/Default'.
+                            yield swapStyle(WEB_MEDIUM);
+                        }
+                        break;
+                    //...if it is 'Large/Default' Garden style, or equivalent...
+                    case WEB_LARGE_ID:
+                    case ANDROID_LARGE_ID:
+                    case IOS_LARGE_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Body'.
+                            yield swapStyle(IOS_LARGE);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to 'Body 1'.
+                            yield swapStyle(ANDROID_LARGE);
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'Large/Default'.
+                            yield swapStyle(WEB_LARGE);
+                        }
+                        break;
+                    //...if it is 'XLarge/Default' Garden style, or equivalent...
+                    case WEB_XLARGE_ID:
+                    case ANDROID_XLARGE_ID:
+                    case IOS_XLARGE_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Title 2'.
+                            yield swapStyle(IOS_XLARGE);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to 'Headline 6'.
+                            yield swapStyle(ANDROID_XLARGE);
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'XLarge/Default'.
+                            yield swapStyle(WEB_XLARGE);
+                        }
+                        break;
+                    //...if it is 'XXLarge/Default' Garden style, or equivalent...
+                    case WEB_XXLARGE_ID:
+                    case ANDROID_XXLARGE_ID:
+                    case IOS_XXLARGE_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Title 1'.
+                            yield swapStyle(IOS_XXLARGE);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to 'Headline 5'.
+                            yield swapStyle(ANDROID_XXLARGE);
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'XXLarge/Default'.
+                            yield swapStyle(WEB_XXLARGE);
+                        }
+                        break;
+                    //...if it is 'XXXLarge/Default' Garden style, or equivalent...
+                    case WEB_XXXLARGE_ID:
+                    case ANDROID_XXXLARGE_ID:
+                    case IOS_XXXLARGE_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Large Title'.
+                            yield swapStyle(IOS_XXXLARGE);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to 'Headline 4'.
+                            yield swapStyle(ANDROID_XXXLARGE);
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'XXXLarge/Default'.
+                            yield swapStyle(WEB_XXXLARGE);
+                        }
+                        break;
+                    //--Bold Styles--//
+                    //...if it is 'Small/Bold' Garden style, or equivalent...
+                    //TODO Need to account for android styles that have been bolded
+                    case WEB_SMALL_BOLD_ID:
+                    case IOS_SMALL_BOLD_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Caption 1'.
+                            yield swapStyle(IOS_SMALL_BOLD);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to '_'.
+                            yield swapStyle(ANDROID_SMALL);
+                            //TODO: Make bold
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'Small/Bold'.
+                            yield swapStyle(WEB_SMALL_BOLD);
+                        }
+                        break;
+                    //...if it is 'Medium/Bold' Garden style, or equivalent...
+                    case WEB_MEDIUM_BOLD_ID:
+                    case IOS_MEDIUM_BOLD_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Subhead'.
+                            yield swapStyle(IOS_MEDIUM_BOLD);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to '_'.
+                            yield swapStyle(ANDROID_MEDIUM);
+                            //TODO: Make bold
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'Medium/Bold'.
+                            yield swapStyle(WEB_MEDIUM_BOLD);
+                        }
+                        break;
+                    //...if it is 'Large/Bold' Garden style, or equivalent...
+                    case WEB_LARGE_BOLD_ID:
+                    case IOS_LARGE_BOLD_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Body'.
+                            yield swapStyle(IOS_LARGE_BOLD);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to '_'.
+                            yield swapStyle(ANDROID_LARGE);
+                            //TODO: Make bold
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'Large/Bold'.
+                            yield swapStyle(WEB_LARGE_BOLD);
+                        }
+                        break;
+                    //...if it is 'XLarge/Bold' Garden style, or equivalent...
+                    case WEB_XLARGE_BOLD_ID:
+                    case IOS_XLARGE_BOLD_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Title 2'.
+                            yield swapStyle(IOS_XLARGE_BOLD);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to '_'.
+                            yield swapStyle(ANDROID_XLARGE);
+                            //TODO: Make bold
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'XLarge/Bold'.
+                            yield swapStyle(WEB_XLARGE_BOLD);
+                        }
+                        break;
+                    //...if it is 'XXLarge/Bold' Garden style, or equivalent...
+                    case WEB_XXLARGE_BOLD_ID:
+                    case IOS_XXLARGE_BOLD_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Title 1'.
+                            yield swapStyle(IOS_XXLARGE_BOLD);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to '_'.
+                            yield swapStyle(ANDROID_XXLARGE);
+                            //TODO: Make bold
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'XXLarge/Bold'.
+                            yield swapStyle(WEB_XXLARGE_BOLD);
+                        }
+                        break;
+                    //...if it is 'XXXLarge/Bold' Garden style, or equivalent...
+                    case WEB_XXXLARGE_BOLD_ID:
+                    case IOS_XXXLARGE_BOLD_ID:
+                        if (figma.command == "ios") {
+                            //...swap to 'Large Title'.
+                            yield swapStyle(IOS_XXXLARGE_BOLD);
+                        }
+                        else if (figma.command == "android") {
+                            //...swap to '_'.
+                            yield swapStyle(ANDROID_XXXLARGE);
+                            //TODO: Make bold
+                        }
+                        else if (figma.command == "web") {
+                            //...swap to 'XXXLarge/Bold'.
+                            yield swapStyle(WEB_XXXLARGE_BOLD);
+                        }
+                        break;
+                }
+                function swapStyle(style) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        try {
+                            yield figma.importStyleByKeyAsync(style).then(baseStyle => { textNode.textStyleId = baseStyle.id; });
+                        }
+                        catch (error) {
+                            figma.notify("Font styles are missing!");
+                        }
+                    });
+                }
+            });
         }
     });
 }
