@@ -1,4 +1,5 @@
 //Font style constants
+//TODO should we look up style IDs every time, instead of hard coding them?
 const WEB_SMALL_ID = "S:ee895ec978f925d906ebf5a8d3c4aec40817edcd,103:1"
 const WEB_MEDIUM_ID = "S:237497a4fee5126f04c9af39b149e47fa9be5b5e,103:8"
 const WEB_LARGE_ID = "S:afd7691e371b665f6f378dea9ada5f41a4fefe97,103:14"
@@ -61,45 +62,36 @@ const ANDROID_XLARGE = "49a2ca0d4065198f32051c3f2d897cbfb4e15cee" //Headline 6
 const ANDROID_XXLARGE = "56303f2b9aeafbbd72c84c2d5614010157e34abb" //Headline 5
 const ANDROID_XXXLARGE = "eeb79754f104dec940500a208f02d7e5b60cc204" //Headline 4
 
+temp()
 
-importStyles()
+async function temp() {
+  await swap().then(() => { figma.closePlugin() })
+}
 
-function swap() {
+async function swap() {
   let selectionSet = figma.currentPage.selection
-  selectionSet.forEach(selection => {
-    if (selection.type == "INSTANCE") {
-      //If selection is a component instance...
-      //Find all its text layer children...
-      let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
-      //...and for each one...
-      textNodes.forEach(textNode => {
-        swapText(textNode)
-      })
-    } else if (selection.type == "FRAME") {
-      //If selection is a frame...
-      //Find all its text layer children...
-      let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
-      //...and for each one...
-      textNodes.forEach(textNode => {
-        swapText(textNode)
-      })
-    } else if (selection.type == "GROUP") {
-      //If selection is a frame...
-      //Find all its text layer children...
-      let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
-      //...and for each one...
-      textNodes.forEach(textNode => {
-        swapText(textNode)
-      })
-    } else if (selection.type == "TEXT") {
+  await Promise.all(selectionSet.map(async selection => {
+    switch (selection.type) {
+      //If selection is a component instance, group or frame...
+      case "INSTANCE":
+      case "FRAME":
+      case "GROUP":
+        //Find all its text layer children...
+        let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
+        //...and for each one...
+        await Promise.all(textNodes.map(async textNode => {
+          await swapText(textNode)
+        }))
+        break
       //If selection is a text layer...
-      //...just switch it...
-      swapText(selection)
+      case "TEXT":
+        //...just switch it...
+        await swapText(selection)
+        break
     }
-  })
-  figma.closePlugin()
+  }))
 
-  function swapText(textNode: TextNode) {
+  async function swapText(textNode: TextNode) {
     switch (textNode.textStyleId) {
       //--Regular Styles--//
       //...if it is 'Small/Default' Garden style, or equivalent...
@@ -108,13 +100,13 @@ function swap() {
       case IOS_SMALL_ID:
         if (figma.command == "ios") {
           //...swap to 'Caption 1'.
-          textNode.textStyleId = IOS_SMALL_ID
+          await swapStyle(IOS_SMALL)
         } else if (figma.command == "android") {
           //...swap to 'Caption'.
-          textNode.textStyleId = ANDROID_SMALL_ID
+          await swapStyle(ANDROID_SMALL)
         } else if (figma.command == "web") {
           //...swap to 'Small/Default'.
-          textNode.textStyleId = WEB_SMALL_ID
+          await swapStyle(WEB_SMALL)
         }
         break
       //...if it is 'Medium/Default' Garden style, or equivalent...
@@ -123,13 +115,13 @@ function swap() {
       case IOS_MEDIUM_ID:
         if (figma.command == "ios") {
           //...swap to 'Subhead'.
-          textNode.textStyleId = IOS_MEDIUM_ID
+          await swapStyle(IOS_MEDIUM)
         } else if (figma.command == "android") {
           //...swap to 'Body 2'.
-          textNode.textStyleId = ANDROID_MEDIUM_ID
+          await swapStyle(ANDROID_MEDIUM)
         } else if (figma.command == "web") {
           //...swap to 'Medium/Default'.
-          textNode.textStyleId = WEB_MEDIUM_ID
+          await swapStyle(WEB_MEDIUM)
         }
         break
       //...if it is 'Large/Default' Garden style, or equivalent...
@@ -138,13 +130,13 @@ function swap() {
       case IOS_LARGE_ID:
         if (figma.command == "ios") {
           //...swap to 'Body'.
-          textNode.textStyleId = IOS_LARGE_ID
+          await swapStyle(IOS_LARGE)
         } else if (figma.command == "android") {
           //...swap to 'Body 1'.
-          textNode.textStyleId = ANDROID_LARGE_ID
+          await swapStyle(ANDROID_LARGE)
         } else if (figma.command == "web") {
           //...swap to 'Large/Default'.
-          textNode.textStyleId = WEB_LARGE_ID
+          await swapStyle(WEB_LARGE)
         }
         break
       //...if it is 'XLarge/Default' Garden style, or equivalent...
@@ -153,13 +145,13 @@ function swap() {
       case IOS_XLARGE_ID:
         if (figma.command == "ios") {
           //...swap to 'Title 2'.
-          textNode.textStyleId = IOS_XLARGE_ID
+          await swapStyle(IOS_XLARGE)
         } else if (figma.command == "android") {
           //...swap to 'Headline 6'.
-          textNode.textStyleId = ANDROID_XLARGE_ID
+          await swapStyle(ANDROID_XLARGE)
         } else if (figma.command == "web") {
           //...swap to 'XLarge/Default'.
-          textNode.textStyleId = WEB_XLARGE_ID
+          await swapStyle(WEB_XLARGE)
         }
         break
       //...if it is 'XXLarge/Default' Garden style, or equivalent...
@@ -168,13 +160,13 @@ function swap() {
       case IOS_XXLARGE_ID:
         if (figma.command == "ios") {
           //...swap to 'Title 1'.
-          textNode.textStyleId = IOS_XXLARGE_ID
+          await swapStyle(IOS_XXLARGE)
         } else if (figma.command == "android") {
           //...swap to 'Headline 5'.
-          textNode.textStyleId = ANDROID_XXLARGE_ID
+          await swapStyle(ANDROID_XXLARGE)
         } else if (figma.command == "web") {
           //...swap to 'XXLarge/Default'.
-          textNode.textStyleId = WEB_XXLARGE_ID
+          await swapStyle(WEB_XXLARGE)
         }
         break
       //...if it is 'XXXLarge/Default' Garden style, or equivalent...
@@ -183,13 +175,13 @@ function swap() {
       case IOS_XXXLARGE_ID:
         if (figma.command == "ios") {
           //...swap to 'Large Title'.
-          textNode.textStyleId = IOS_XXXLARGE_ID
+          await swapStyle(IOS_XXXLARGE)
         } else if (figma.command == "android") {
           //...swap to 'Headline 4'.
-          textNode.textStyleId = ANDROID_XXXLARGE_ID
+          await swapStyle(ANDROID_XXXLARGE)
         } else if (figma.command == "web") {
           //...swap to 'XXXLarge/Default'.
-          textNode.textStyleId = WEB_XXXLARGE_ID
+          await swapStyle(WEB_XXXLARGE)
         }
         break
       //--Bold Styles--//
@@ -199,14 +191,14 @@ function swap() {
       case IOS_SMALL_BOLD_ID:
         if (figma.command == "ios") {
           //...swap to 'Caption 1'.
-          textNode.textStyleId = IOS_SMALL_BOLD_ID
+          await swapStyle(IOS_SMALL_BOLD)
         } else if (figma.command == "android") {
           //...swap to '_'.
-          textNode.textStyleId = ANDROID_SMALL_ID
+          await swapStyle(ANDROID_SMALL)
           //TODO: Make bold
         } else if (figma.command == "web") {
           //...swap to 'Small/Bold'.
-          textNode.textStyleId = WEB_SMALL_BOLD_ID
+          await swapStyle(WEB_SMALL_BOLD)
         }
         break
       //...if it is 'Medium/Bold' Garden style, or equivalent...
@@ -214,14 +206,14 @@ function swap() {
       case IOS_MEDIUM_BOLD_ID:
         if (figma.command == "ios") {
           //...swap to 'Subhead'.
-          textNode.textStyleId = IOS_MEDIUM_BOLD_ID
+          await swapStyle(IOS_MEDIUM_BOLD)
         } else if (figma.command == "android") {
           //...swap to '_'.
-          textNode.textStyleId = ANDROID_MEDIUM_ID
+          await swapStyle(ANDROID_MEDIUM)
           //TODO: Make bold
         } else if (figma.command == "web") {
           //...swap to 'Medium/Bold'.
-          textNode.textStyleId = WEB_MEDIUM_BOLD_ID
+          await swapStyle(WEB_MEDIUM_BOLD)
         }
         break
       //...if it is 'Large/Bold' Garden style, or equivalent...
@@ -229,14 +221,14 @@ function swap() {
       case IOS_LARGE_BOLD_ID:
         if (figma.command == "ios") {
           //...swap to 'Body'.
-          textNode.textStyleId = IOS_LARGE_BOLD_ID
+          await swapStyle(IOS_LARGE_BOLD)
         } else if (figma.command == "android") {
           //...swap to '_'.
-          textNode.textStyleId = ANDROID_LARGE_ID
+          await swapStyle(ANDROID_LARGE)
           //TODO: Make bold
         } else if (figma.command == "web") {
           //...swap to 'Large/Bold'.
-          textNode.textStyleId = WEB_LARGE_BOLD_ID
+          await swapStyle(WEB_LARGE_BOLD)
         }
         break
       //...if it is 'XLarge/Bold' Garden style, or equivalent...
@@ -244,14 +236,14 @@ function swap() {
       case IOS_XLARGE_BOLD_ID:
         if (figma.command == "ios") {
           //...swap to 'Title 2'.
-          textNode.textStyleId = IOS_XLARGE_BOLD_ID
+          await swapStyle(IOS_XLARGE_BOLD)
         } else if (figma.command == "android") {
           //...swap to '_'.
-          textNode.textStyleId = ANDROID_XLARGE_ID
+          await swapStyle(ANDROID_XLARGE)
           //TODO: Make bold
         } else if (figma.command == "web") {
           //...swap to 'XLarge/Bold'.
-          textNode.textStyleId = WEB_XLARGE_BOLD_ID
+          await swapStyle(WEB_XLARGE_BOLD)
         }
         break
       //...if it is 'XXLarge/Bold' Garden style, or equivalent...
@@ -259,14 +251,14 @@ function swap() {
       case IOS_XXLARGE_BOLD_ID:
         if (figma.command == "ios") {
           //...swap to 'Title 1'.
-          textNode.textStyleId = IOS_XXLARGE_BOLD_ID
+          await swapStyle(IOS_XXLARGE_BOLD)
         } else if (figma.command == "android") {
           //...swap to '_'.
-          textNode.textStyleId = ANDROID_XXLARGE_ID
+          await swapStyle(ANDROID_XXLARGE)
           //TODO: Make bold
         } else if (figma.command == "web") {
           //...swap to 'XXLarge/Bold'.
-          textNode.textStyleId = WEB_XXLARGE_BOLD_ID
+          await swapStyle(WEB_XXLARGE_BOLD)
         }
         break
       //...if it is 'XXXLarge/Bold' Garden style, or equivalent...
@@ -274,64 +266,24 @@ function swap() {
       case IOS_XXXLARGE_BOLD_ID:
         if (figma.command == "ios") {
           //...swap to 'Large Title'.
-          textNode.textStyleId = IOS_XXXLARGE_BOLD_ID
+          await swapStyle(IOS_XXXLARGE_BOLD)
         } else if (figma.command == "android") {
           //...swap to '_'.
-          textNode.textStyleId = ANDROID_XXXLARGE_ID
+          await swapStyle(ANDROID_XXXLARGE)
           //TODO: Make bold
         } else if (figma.command == "web") {
           //...swap to 'XXXLarge/Bold'.
-          textNode.textStyleId = WEB_XXXLARGE_BOLD_ID
+          await swapStyle(WEB_XXXLARGE_BOLD)
         }
         break
     }
+
+    async function swapStyle(style: string) {
+      try {
+        await figma.importStyleByKeyAsync(style).then(baseStyle => { textNode.textStyleId = baseStyle.id })
+      } catch (error) {
+        figma.notify("Font styles are missing!")
+      }
+    }
   }
 }
-
-// Make sure to close the plugin when you're done. Otherwise the plugin will
-// keep running, which shows the cancel button at the bottom of the screen.
-// figma.closePlugin();
-
-async function importStyles() {
-  let testText = figma.createText()
-  try {
-    //TODO maybe we should show some UI here, to let users know the import is happening?
-    //TODO Should we reset the IDs, in case they change?
-    await figma.importStyleByKeyAsync(WEB_SMALL)
-    await figma.importStyleByKeyAsync(WEB_MEDIUM)
-    await figma.importStyleByKeyAsync(WEB_LARGE)
-    await figma.importStyleByKeyAsync(WEB_XLARGE)
-    await figma.importStyleByKeyAsync(WEB_XXLARGE)
-    await figma.importStyleByKeyAsync(WEB_XXXLARGE)
-    await figma.importStyleByKeyAsync(WEB_SMALL_BOLD)
-    await figma.importStyleByKeyAsync(WEB_MEDIUM_BOLD)
-    await figma.importStyleByKeyAsync(WEB_LARGE_BOLD)
-    await figma.importStyleByKeyAsync(WEB_XLARGE_BOLD)
-    await figma.importStyleByKeyAsync(WEB_XXLARGE_BOLD)
-    await figma.importStyleByKeyAsync(WEB_XXXLARGE_BOLD)
-    await figma.importStyleByKeyAsync(IOS_SMALL)
-    await figma.importStyleByKeyAsync(IOS_MEDIUM)
-    await figma.importStyleByKeyAsync(IOS_LARGE)
-    await figma.importStyleByKeyAsync(IOS_XLARGE)
-    await figma.importStyleByKeyAsync(IOS_XXLARGE)
-    await figma.importStyleByKeyAsync(IOS_XXXLARGE)
-    await figma.importStyleByKeyAsync(IOS_SMALL_BOLD)
-    await figma.importStyleByKeyAsync(IOS_MEDIUM_BOLD)
-    await figma.importStyleByKeyAsync(IOS_LARGE_BOLD)
-    await figma.importStyleByKeyAsync(IOS_XLARGE_BOLD)
-    await figma.importStyleByKeyAsync(IOS_XXLARGE_BOLD)
-    await figma.importStyleByKeyAsync(IOS_XXXLARGE_BOLD)
-    await figma.importStyleByKeyAsync(ANDROID_SMALL)
-    await figma.importStyleByKeyAsync(ANDROID_MEDIUM)
-    await figma.importStyleByKeyAsync(ANDROID_LARGE)
-    await figma.importStyleByKeyAsync(ANDROID_XLARGE)
-    await figma.importStyleByKeyAsync(ANDROID_XXLARGE)
-    await figma.importStyleByKeyAsync(ANDROID_XXXLARGE)
-    // Styles all present and accounted for!
-    swap()
-  } catch (error) {
-    figma.notify("Font styles are missing!")
-    console.log(error);
-  }
-}
-
