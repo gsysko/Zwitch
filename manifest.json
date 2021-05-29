@@ -4,9 +4,9 @@
   "api": "1.0.0",
   "main": "code.js",
   "menu": [
-    {"name": "Android", "command": "android"},
-    {"name": "iOS", "command": "ios"},
-    {"name": "Web", "command": "web"}
+    {"name": "...to Android", "command": "android"},
+    {"name": "...to iOS", "command": "ios"},
+    {"name": "...to Web", "command": "web"}
   ],
   "relaunchButtons": [
     {"name": "Zwitch to Android", "command": "android"},
