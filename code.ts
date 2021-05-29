@@ -82,6 +82,17 @@ async function swap() {
         await Promise.all(textNodes.map(async textNode => {
           await swapText(textNode)
         }))
+        switch (figma.command) {
+          case "android":
+            selection.setRelaunchData({ios: "", web: ""})
+            break;
+          case "ios":
+            selection.setRelaunchData({android: "", web: ""})
+            break;
+          case "web":
+            selection.setRelaunchData({android: "", ios: ""})
+            break;
+        }
         break
       //If selection is a text layer...
       case "TEXT":

@@ -7,5 +7,10 @@
     {"name": "Android", "command": "android"},
     {"name": "iOS", "command": "ios"},
     {"name": "Web", "command": "web"}
+  ],
+  "relaunchButtons": [
+    {"name": "Zwitch to Android", "command": "android"},
+    {"name": "Zwitch to iOS", "command": "ios"},
+    {"name": "Zwitch to Web", "command": "web"}
   ]
 }

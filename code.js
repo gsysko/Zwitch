@@ -90,6 +90,17 @@ function swap() {
                     yield Promise.all(textNodes.map((textNode) => __awaiter(this, void 0, void 0, function* () {
                         yield swapText(textNode);
                     })));
+                    switch (figma.command) {
+                        case "android":
+                            selection.setRelaunchData({ ios: "", web: "" });
+                            break;
+                        case "ios":
+                            selection.setRelaunchData({ android: "", web: "" });
+                            break;
+                        case "web":
+                            selection.setRelaunchData({ android: "", ios: "" });
+                            break;
+                    }
                     break;
                 //If selection is a text layer...
                 case "TEXT":
