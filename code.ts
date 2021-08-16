@@ -30,6 +30,20 @@ const ANDROID_XLARGE = "49a2ca0d4065198f32051c3f2d897cbfb4e15cee" //Headline 6
 const ANDROID_XXLARGE = "56303f2b9aeafbbd72c84c2d5614010157e34abb" //Headline 5
 const ANDROID_XXXLARGE = "eeb79754f104dec940500a208f02d7e5b60cc204" //Headline 4
 
+//Component Key Constants
+const WEB_HEADER = "da85778fa3e3f54485fcedfe1bf2476f851f2f41"
+const WEB_HEADER_DESC = "11a70aadce0c7f1ff36a5ca3b7fd41ca54782e5f"
+const WEB_HEADER_AVATAR = "7d42432a3d8806fafe8c1f11af6d2f7e87771927"
+const WEB_HEADER_ALL = "ea7ad08e03a4255ecf0cf75664ebc7ad0283f7d5"
+const IOS_HEADER = "a7c6154ff6b6c4753d96be042b84e00669aa2d4e"
+const IOS_HEADER_DESC = "bbe64c12fff9dc0a51e6df8282775f5c8ad1d077"
+const IOS_HEADER_AVATAR = "2ca9a35975055ed0f569bdd56f6aa27c0701839a"
+const IOS_HEADER_ALL = "6689ddbaea94cdce8c2d1f564fefabf2f7f6db98"
+const ANDROID_HEADER = "75a226acf592f706a101b29a8721a82c0b2a5992"
+const ANDROID_HEADER_DESC = "dae949dbbdb3d7f91b54ed2acd34dbdfdbe66d47"
+const ANDROID_HEADER_AVATAR = "12e8d41fa49cc8e7635b7628edde480ce2cff2a4"
+const ANDROID_HEADER_ALL = "6487e64f62e0a21701c5e5f1dd206b6a879c28e1"
+
 temp()
 
 async function temp() {
@@ -49,6 +63,18 @@ async function swap() {
         //...and for each one...
         await Promise.all(textNodes.map(async textNode => {
           await swapText(textNode)
+        }))
+
+        //Find all its instance layer children, and include itself, if a instance...
+        let instanceNodes: InstanceNode[] = selection.findAll(node => node.type == "INSTANCE") as InstanceNode[]
+        if (selection.type == "INSTANCE") {
+          instanceNodes.push(selection)
+        }
+        //...and for each...
+        await Promise.all(instanceNodes.map(async instanceNode => {
+          if (instanceNode.mainComponent.parent && instanceNode.mainComponent.parent.name == "Header") {
+            await swapHeaders(instanceNode)
+          }
         }))
         switch (figma.command) {
           case "android":
@@ -265,5 +291,54 @@ async function swap() {
         figma.notify("Font styles are missing!")
       }
     }
+  }
+}
+
+async function swapHeaders(header: InstanceNode) {
+  switch(header.mainComponent.key) {
+    case WEB_HEADER:
+    case IOS_HEADER:
+    case ANDROID_HEADER:
+      if (figma.command == "ios") {
+        header.swapComponent(await figma.importComponentByKeyAsync(IOS_HEADER))
+      } else if (figma.command == "android") {
+        header.swapComponent(await figma.importComponentByKeyAsync(ANDROID_HEADER))
+      } else if (figma.command == "web") {
+        header.swapComponent(await figma.importComponentByKeyAsync(WEB_HEADER))
+      }
+      break;
+    case WEB_HEADER_DESC:
+    case IOS_HEADER_DESC:
+    case ANDROID_HEADER_DESC:
+      if (figma.command == "ios") {
+        header.swapComponent(await figma.importComponentByKeyAsync(IOS_HEADER_DESC))
+      } else if (figma.command == "android") {
+        header.swapComponent(await figma.importComponentByKeyAsync(ANDROID_HEADER_DESC))
+      } else if (figma.command == "web") {
+        header.swapComponent(await figma.importComponentByKeyAsync(WEB_HEADER_DESC))
+      }
+      break;
+    case WEB_HEADER_AVATAR:
+    case IOS_HEADER_AVATAR:
+    case ANDROID_HEADER_AVATAR:
+      if (figma.command == "ios") {
+        header.swapComponent(await figma.importComponentByKeyAsync(IOS_HEADER_AVATAR))
+      } else if (figma.command == "android") {
+        header.swapComponent(await figma.importComponentByKeyAsync(ANDROID_HEADER_AVATAR))
+      } else if (figma.command == "web") {
+        header.swapComponent(await figma.importComponentByKeyAsync(WEB_HEADER_AVATAR))
+      }
+      break;
+    case WEB_HEADER_ALL:
+    case IOS_HEADER_ALL:
+    case ANDROID_HEADER_ALL:
+      if (figma.command == "ios") {
+        header.swapComponent(await figma.importComponentByKeyAsync(IOS_HEADER_ALL))
+      } else if (figma.command == "android") {
+        header.swapComponent(await figma.importComponentByKeyAsync(ANDROID_HEADER_ALL))
+      } else if (figma.command == "web") {
+        header.swapComponent(await figma.importComponentByKeyAsync(WEB_HEADER_ALL))
+      }
+      break;
   }
 }
