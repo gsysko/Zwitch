@@ -104,7 +104,6 @@ function swap() {
         })));
         function swapText(textNode) {
             return __awaiter(this, void 0, void 0, function* () {
-                debugger;
                 let style = figma.getStyleById(textNode.textStyleId);
                 try {
                     switch (style.key) {
