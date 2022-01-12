@@ -47,12 +47,13 @@ const IOS_HEADER = "a7c6154ff6b6c4753d96be042b84e00669aa2d4e";
 const IOS_HEADER_DESC = "bbe64c12fff9dc0a51e6df8282775f5c8ad1d077";
 const IOS_HEADER_AVATAR = "2ca9a35975055ed0f569bdd56f6aa27c0701839a";
 const IOS_HEADER_ALL = "6689ddbaea94cdce8c2d1f564fefabf2f7f6db98";
+const IOS_HOME_INDICATOR = "6c37541b3ea809b094592016b8eb1bcbc1b57a2c";
 const ANDROID_HEADER = "75a226acf592f706a101b29a8721a82c0b2a5992";
 const ANDROID_HEADER_DESC = "dae949dbbdb3d7f91b54ed2acd34dbdfdbe66d47";
 const ANDROID_HEADER_AVATAR = "12e8d41fa49cc8e7635b7628edde480ce2cff2a4";
 const ANDROID_HEADER_ALL = "6487e64f62e0a21701c5e5f1dd206b6a879c28e1";
-temp();
-function temp() {
+run();
+function run() {
     return __awaiter(this, void 0, void 0, function* () {
         yield swap().then(() => { figma.closePlugin(); });
     });
@@ -83,6 +84,8 @@ function swap() {
                             yield swapHeaders(instanceNode);
                         }
                     })));
+                    //Set relaunch buttons.
+                    //Todo: This should be moved, so as to account for setting/resetting children (some of which might already have a button) too.
                     switch (figma.command) {
                         case "android":
                             selection.setRelaunchData({ ios: "", web: "" });
@@ -93,6 +96,40 @@ function swap() {
                         case "web":
                             selection.setRelaunchData({ android: "", ios: "" });
                             break;
+                    }
+                    //If the frame is named "Messenger" resize and add/remove an iOS home indicator.
+                    //Todo: This should be moved, so as to find "Messenger"s among the children too.
+                    if (selection.type == "FRAME" && selection.name == "Messenger") {
+                        switch (figma.command) {
+                            case "android":
+                                selection.resize(360, 640);
+                                break;
+                            case "ios":
+                                selection.resize(375, 812);
+                                break;
+                            case "web":
+                                selection.resize(380, 700);
+                                break;
+                        }
+                        let home = selection.findChild(node => node.name == "Home Indicator" && node.type == "INSTANCE");
+                        switch (figma.command) {
+                            case "android":
+                            case "web":
+                                if (home) {
+                                    home.visible = false;
+                                }
+                                break;
+                            case "ios":
+                                if (!home) {
+                                    home = (yield figma.importComponentByKeyAsync(IOS_HOME_INDICATOR)).createInstance();
+                                    home.layoutAlign = "STRETCH";
+                                    selection.appendChild(home);
+                                }
+                                else if (!home.visible) {
+                                    home.visible = true;
+                                }
+                                break;
+                        }
                     }
                     break;
                 //If selection is a text layer...
