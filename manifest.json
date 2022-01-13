@@ -3,6 +3,7 @@
   "id": "972533077037860848",
   "api": "1.0.0",
   "main": "code.js",
+  "editorType": ["figma"],
   "menu": [
     {"name": "...to Android", "command": "android"},
     {"name": "...to iOS", "command": "ios"},
