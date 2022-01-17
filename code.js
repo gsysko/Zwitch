@@ -20,18 +20,30 @@ const WEB_LARGE_BOLD = "f358d7568e840b9656f2d98d8e9c02a4968c1a31";
 const WEB_XLARGE_BOLD = "7babfde548b9e87940cf2503ee352c52f308ff9a";
 const WEB_XXLARGE_BOLD = "acd3a5e9acb9ecd650ecca5c977486d435c3f686";
 const WEB_XXXLARGE_BOLD = "3a907a5ec9a9bccbada362c1a053cbfa8a301791";
-const IOS_SMALL = "2629d79d087fbe03434d7ae180456796d6e1a3d2"; //Caption 1
-const IOS_MEDIUM = "ccbd2b00d262f548276bd22147bed1596dd6771f"; //Subhead
-const IOS_LARGE = "376bf391eb763ee87b3906f26b3a0c3dfca0ddd0"; //Body
-const IOS_XLARGE = "0250ab0a8a13ce37a6bad51be9d753b9dfdf4787"; //Title 2
-const IOS_XXLARGE = "5020a1bdf48137ba69a21134c8445e7832d65ea9"; //Title 1
-const IOS_XXXLARGE = "e867cd04887e0e54b3c9eade9fd7e40e61ffda12"; //Large Title
-const IOS_SMALL_BOLD = "6ffc4cd6b84a26e25e6da606f5a5416b8b80beda";
-const IOS_MEDIUM_BOLD = "c693f2b16ad2727b668773ed6866529e856bb182";
-const IOS_LARGE_BOLD = "e9fb8165d42eae073e850d8005e20472a1295c26";
-const IOS_XLARGE_BOLD = "a9b69053199d2b0f3c60bf047e2eea68e44bfc0d";
-const IOS_XXLARGE_BOLD = "de4407ec3146bf25cd0f7fb9fe69640346835865";
-const IOS_XXXLARGE_BOLD = "0519019a6f20964f4e54887d5b25cdb23708d22f";
+const IOS14_SMALL = "2629d79d087fbe03434d7ae180456796d6e1a3d2"; //Caption 1
+const IOS14_MEDIUM = "ccbd2b00d262f548276bd22147bed1596dd6771f"; //Subhead
+const IOS14_LARGE = "376bf391eb763ee87b3906f26b3a0c3dfca0ddd0"; //Body
+const IOS14_XLARGE = "0250ab0a8a13ce37a6bad51be9d753b9dfdf4787"; //Title 2
+const IOS14_XXLARGE = "5020a1bdf48137ba69a21134c8445e7832d65ea9"; //Title 1
+const IOS14_XXXLARGE = "e867cd04887e0e54b3c9eade9fd7e40e61ffda12"; //Large Title
+const IOS14_SMALL_BOLD = "6ffc4cd6b84a26e25e6da606f5a5416b8b80beda";
+const IOS14_MEDIUM_BOLD = "c693f2b16ad2727b668773ed6866529e856bb182";
+const IOS14_LARGE_BOLD = "e9fb8165d42eae073e850d8005e20472a1295c26";
+const IOS14_XLARGE_BOLD = "a9b69053199d2b0f3c60bf047e2eea68e44bfc0d";
+const IOS14_XXLARGE_BOLD = "de4407ec3146bf25cd0f7fb9fe69640346835865";
+const IOS14_XXXLARGE_BOLD = "0519019a6f20964f4e54887d5b25cdb23708d22f";
+const IOS15_SMALL = "9fb20e130651023a2fb9caece0c7d3d6eb315d57"; //Caption 1
+const IOS15_MEDIUM = "5110a8afcfc58a0127a8bd0be7e31f2b8b206e66"; //Subhead
+const IOS15_LARGE = "f37f65a1bf4225f6b1675f44c5f0e8320a96dc2e"; //Body
+const IOS15_XLARGE = "60d6eb65314a2d8f99e84621b847689c5f0178e6"; //Title 2
+const IOS15_XXLARGE = "63fb0b2f86c3706c47f1d6111324bc2c0e4f502e"; //Title 1
+const IOS15_XXXLARGE = "24aeb16a275fa6deb4ac3d5eff669242fc27c3c9"; //Large Title
+const IOS15_SMALL_BOLD = "fca3f9eeb9fd636bf6475582e185b687f3203152";
+const IOS15_MEDIUM_BOLD = "4257384f1d426ba51133e9e621dc00753e3a6b19";
+const IOS15_LARGE_BOLD = "497bf40c99168146ecc39dd30ef747932bdae5a8";
+const IOS15_XLARGE_BOLD = "f0c587309a6461f0619434bc8ed2837f312d8410";
+const IOS15_XXLARGE_BOLD = "6af7f6658481f4171b7b3c3c2598ac6406638466";
+const IOS15_XXXLARGE_BOLD = "6b2bae09809bc938ae5d9c4cdf940c0b9c6eeebc";
 const ANDROID_SMALL = "a443183c311be9703438ca0b8efb595d9f319aa4"; //Caption
 const ANDROID_MEDIUM = "6b39bd500cc5c71f5dac4b3b56f74e924d582e39"; //Body 2
 const ANDROID_LARGE = "4a64c8033dcc608fe9c88cb0850d0129eb866bc5"; //Body 1
@@ -148,10 +160,11 @@ function swap() {
                         //...if it is 'Small/Default' Garden style, or equivalent...
                         case WEB_SMALL:
                         case ANDROID_SMALL:
-                        case IOS_SMALL:
+                        case IOS14_SMALL:
+                        case IOS15_SMALL:
                             if (figma.command == "ios") {
                                 //...swap to 'Caption 1'.
-                                yield swapStyle(IOS_SMALL);
+                                yield swapStyle(IOS15_SMALL);
                             }
                             else if (figma.command == "android") {
                                 //...swap to 'Caption'.
@@ -165,10 +178,11 @@ function swap() {
                         //...if it is 'Medium/Default' Garden style, or equivalent...
                         case WEB_MEDIUM:
                         case ANDROID_MEDIUM:
-                        case IOS_MEDIUM:
+                        case IOS14_MEDIUM:
+                        case IOS15_MEDIUM:
                             if (figma.command == "ios") {
                                 //...swap to 'Subhead'.
-                                yield swapStyle(IOS_MEDIUM);
+                                yield swapStyle(IOS15_MEDIUM);
                             }
                             else if (figma.command == "android") {
                                 //...swap to 'Body 2'.
@@ -182,10 +196,11 @@ function swap() {
                         //...if it is 'Large/Default' Garden style, or equivalent...
                         case WEB_LARGE:
                         case ANDROID_LARGE:
-                        case IOS_LARGE:
+                        case IOS14_LARGE:
+                        case IOS15_LARGE:
                             if (figma.command == "ios") {
                                 //...swap to 'Body'.
-                                yield swapStyle(IOS_LARGE);
+                                yield swapStyle(IOS15_LARGE);
                             }
                             else if (figma.command == "android") {
                                 //...swap to 'Body 1'.
@@ -199,10 +214,11 @@ function swap() {
                         //...if it is 'XLarge/Default' Garden style, or equivalent...
                         case WEB_XLARGE:
                         case ANDROID_XLARGE:
-                        case IOS_XLARGE:
+                        case IOS14_XLARGE:
+                        case IOS15_XLARGE:
                             if (figma.command == "ios") {
                                 //...swap to 'Title 2'.
-                                yield swapStyle(IOS_XLARGE);
+                                yield swapStyle(IOS15_XLARGE);
                             }
                             else if (figma.command == "android") {
                                 //...swap to 'Headline 6'.
@@ -216,10 +232,11 @@ function swap() {
                         //...if it is 'XXLarge/Default' Garden style, or equivalent...
                         case WEB_XXLARGE:
                         case ANDROID_XXLARGE:
-                        case IOS_XXLARGE:
+                        case IOS14_XXLARGE:
+                        case IOS15_XXLARGE:
                             if (figma.command == "ios") {
                                 //...swap to 'Title 1'.
-                                yield swapStyle(IOS_XXLARGE);
+                                yield swapStyle(IOS15_XXLARGE);
                             }
                             else if (figma.command == "android") {
                                 //...swap to 'Headline 5'.
@@ -233,10 +250,11 @@ function swap() {
                         //...if it is 'XXXLarge/Default' Garden style, or equivalent...
                         case WEB_XXXLARGE:
                         case ANDROID_XXXLARGE:
-                        case IOS_XXXLARGE:
+                        case IOS14_XXXLARGE:
+                        case IOS15_XXXLARGE:
                             if (figma.command == "ios") {
                                 //...swap to 'Large Title'.
-                                yield swapStyle(IOS_XXXLARGE);
+                                yield swapStyle(IOS15_XXXLARGE);
                             }
                             else if (figma.command == "android") {
                                 //...swap to 'Headline 4'.
@@ -251,10 +269,11 @@ function swap() {
                         //...if it is 'Small/Bold' Garden style, or equivalent...
                         //TODO Need to account for android styles that have been bolded
                         case WEB_SMALL_BOLD:
-                        case IOS_SMALL_BOLD:
+                        case IOS14_SMALL_BOLD:
+                        case IOS15_SMALL_BOLD:
                             if (figma.command == "ios") {
                                 //...swap to 'Caption 1'.
-                                yield swapStyle(IOS_SMALL_BOLD);
+                                yield swapStyle(IOS15_SMALL_BOLD);
                             }
                             else if (figma.command == "android") {
                                 //...swap to '_'.
@@ -268,10 +287,11 @@ function swap() {
                             break;
                         //...if it is 'Medium/Bold' Garden style, or equivalent...
                         case WEB_MEDIUM_BOLD:
-                        case IOS_MEDIUM_BOLD:
+                        case IOS14_MEDIUM_BOLD:
+                        case IOS15_MEDIUM_BOLD:
                             if (figma.command == "ios") {
                                 //...swap to 'Subhead'.
-                                yield swapStyle(IOS_MEDIUM_BOLD);
+                                yield swapStyle(IOS15_MEDIUM_BOLD);
                             }
                             else if (figma.command == "android") {
                                 //...swap to '_'.
@@ -285,10 +305,11 @@ function swap() {
                             break;
                         //...if it is 'Large/Bold' Garden style, or equivalent...
                         case WEB_LARGE_BOLD:
-                        case IOS_LARGE_BOLD:
+                        case IOS14_LARGE_BOLD:
+                        case IOS15_LARGE_BOLD:
                             if (figma.command == "ios") {
                                 //...swap to 'Body'.
-                                yield swapStyle(IOS_LARGE_BOLD);
+                                yield swapStyle(IOS15_LARGE_BOLD);
                             }
                             else if (figma.command == "android") {
                                 //...swap to '_'.
@@ -302,10 +323,11 @@ function swap() {
                             break;
                         //...if it is 'XLarge/Bold' Garden style, or equivalent...
                         case WEB_XLARGE_BOLD:
-                        case IOS_XLARGE_BOLD:
+                        case IOS14_XLARGE_BOLD:
+                        case IOS15_XLARGE_BOLD:
                             if (figma.command == "ios") {
                                 //...swap to 'Title 2'.
-                                yield swapStyle(IOS_XLARGE_BOLD);
+                                yield swapStyle(IOS15_XLARGE_BOLD);
                             }
                             else if (figma.command == "android") {
                                 //...swap to '_'.
@@ -319,10 +341,11 @@ function swap() {
                             break;
                         //...if it is 'XXLarge/Bold' Garden style, or equivalent...
                         case WEB_XXLARGE_BOLD:
-                        case IOS_XXLARGE_BOLD:
+                        case IOS14_XXLARGE_BOLD:
+                        case IOS15_XXLARGE_BOLD:
                             if (figma.command == "ios") {
                                 //...swap to 'Title 1'.
-                                yield swapStyle(IOS_XXLARGE_BOLD);
+                                yield swapStyle(IOS15_XXLARGE_BOLD);
                             }
                             else if (figma.command == "android") {
                                 //...swap to '_'.
@@ -336,10 +359,11 @@ function swap() {
                             break;
                         //...if it is 'XXXLarge/Bold' Garden style, or equivalent...
                         case WEB_XXXLARGE_BOLD:
-                        case IOS_XXXLARGE_BOLD:
+                        case IOS14_XXXLARGE_BOLD:
+                        case IOS15_XXXLARGE_BOLD:
                             if (figma.command == "ios") {
                                 //...swap to 'Large Title'.
-                                yield swapStyle(IOS_XXXLARGE_BOLD);
+                                yield swapStyle(IOS15_XXXLARGE_BOLD);
                             }
                             else if (figma.command == "android") {
                                 //...swap to '_'.
