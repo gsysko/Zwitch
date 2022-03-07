@@ -67,19 +67,21 @@ async function swap() {
   let selectionSet = figma.currentPage.selection
   await Promise.all(selectionSet.map(async selection => {
     switch (selection.type) {
-      //If selection is a component instance, group or frame...
+      //If selection is a component, instance, group or frame...
       case "INSTANCE":
       case "FRAME":
       case "GROUP":
+      case "COMPONENT":
+      case "COMPONENT_SET":
         //Find all its text layer children...
-        let textNodes: TextNode[] = selection.findAll(node => node.type == "TEXT") as TextNode[]
+        let textNodes: TextNode[] = selection.findAllWithCriteria({types: ['TEXT']})
         //...and for each one...
         await Promise.all(textNodes.map(async textNode => {
           await swapText(textNode)
         }))
 
         //Find all its instance layer children, and include itself, if a instance...
-        let instanceNodes: InstanceNode[] = selection.findAll(node => node.type == "INSTANCE") as InstanceNode[]
+        let instanceNodes: InstanceNode[] = selection.findAllWithCriteria({types: ['INSTANCE']})
         if (selection.type == "INSTANCE") {
           instanceNodes.push(selection)
         }

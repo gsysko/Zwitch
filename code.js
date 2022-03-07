@@ -75,18 +75,20 @@ function swap() {
         let selectionSet = figma.currentPage.selection;
         yield Promise.all(selectionSet.map((selection) => __awaiter(this, void 0, void 0, function* () {
             switch (selection.type) {
-                //If selection is a component instance, group or frame...
+                //If selection is a component, instance, group or frame...
                 case "INSTANCE":
                 case "FRAME":
                 case "GROUP":
+                case "COMPONENT":
+                case "COMPONENT_SET":
                     //Find all its text layer children...
-                    let textNodes = selection.findAll(node => node.type == "TEXT");
+                    let textNodes = selection.findAllWithCriteria({ types: ['TEXT'] });
                     //...and for each one...
                     yield Promise.all(textNodes.map((textNode) => __awaiter(this, void 0, void 0, function* () {
                         yield swapText(textNode);
                     })));
                     //Find all its instance layer children, and include itself, if a instance...
-                    let instanceNodes = selection.findAll(node => node.type == "INSTANCE");
+                    let instanceNodes = selection.findAllWithCriteria({ types: ['INSTANCE'] });
                     if (selection.type == "INSTANCE") {
                         instanceNodes.push(selection);
                     }
