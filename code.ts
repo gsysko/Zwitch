@@ -94,7 +94,11 @@ async function swap() {
         //...and for each...
         await Promise.all(instanceNodes.map(async instanceNode => {
           if (instanceNode.mainComponent.parent && instanceNode.mainComponent.parent.name == "Header") {
-            await swapHeaders(instanceNode)
+            try {
+              await swapHeaders(instanceNode)
+            } catch (error) {
+              figma.notify("Unable to connect to Conversation Kit")
+            }
           }
         }))
         //Set relaunch buttons.
@@ -136,9 +140,13 @@ async function swap() {
               break;
             case "ios":
               if (!home) {
-                home = (await figma.importComponentByKeyAsync(IOS_HOME_INDICATOR)).createInstance()
-                home.layoutAlign = "STRETCH"
-                selection.appendChild(home)
+                try {
+                  home = (await figma.importComponentByKeyAsync(IOS_HOME_INDICATOR)).createInstance()
+                  home.layoutAlign = "STRETCH"
+                  selection.appendChild(home)
+                } catch (error) {
+                  figma.notify("Unable to connect to iOS library")
+                }
               } else if (!home.visible) {
                 home.visible = true
               }

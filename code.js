@@ -101,7 +101,12 @@ function swap() {
                     //...and for each...
                     yield Promise.all(instanceNodes.map((instanceNode) => __awaiter(this, void 0, void 0, function* () {
                         if (instanceNode.mainComponent.parent && instanceNode.mainComponent.parent.name == "Header") {
-                            yield swapHeaders(instanceNode);
+                            try {
+                                yield swapHeaders(instanceNode);
+                            }
+                            catch (error) {
+                                figma.notify("Unable to connect to Conversation Kit");
+                            }
                         }
                     })));
                     //Set relaunch buttons.
@@ -141,9 +146,14 @@ function swap() {
                                 break;
                             case "ios":
                                 if (!home) {
-                                    home = (yield figma.importComponentByKeyAsync(IOS_HOME_INDICATOR)).createInstance();
-                                    home.layoutAlign = "STRETCH";
-                                    selection.appendChild(home);
+                                    try {
+                                        home = (yield figma.importComponentByKeyAsync(IOS_HOME_INDICATOR)).createInstance();
+                                        home.layoutAlign = "STRETCH";
+                                        selection.appendChild(home);
+                                    }
+                                    catch (error) {
+                                        figma.notify("Unable to connect to iOS library");
+                                    }
                                 }
                                 else if (!home.visible) {
                                     home.visible = true;
