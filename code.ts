@@ -35,6 +35,18 @@ const IOS15_LARGE_BOLD = "497bf40c99168146ecc39dd30ef747932bdae5a8"
 const IOS15_XLARGE_BOLD = "f0c587309a6461f0619434bc8ed2837f312d8410"
 const IOS15_XXLARGE_BOLD = "6af7f6658481f4171b7b3c3c2598ac6406638466"
 const IOS15_XXXLARGE_BOLD = "6b2bae09809bc938ae5d9c4cdf940c0b9c6eeebc"
+const IOS16_SMALL = "0a4f83654fa1457e006846bb58d022ff590003f1" //Caption 1
+const IOS16_MEDIUM = "c95ab1b612c275e2b9525918a01c07da8f67d8ee" //Subhead
+const IOS16_LARGE = "1f55ba64e3753b8b3d68292075a773b26f749a34" //Body
+const IOS16_XLARGE = "d8f1986f8611bb3e8a01cea6cf2bfbf907bc492d" //Title 2
+const IOS16_XXLARGE = "d7c205ac56aa325139eca9f4dff900c5926f0a46" //Title 1
+const IOS16_XXXLARGE = "cf93eddc9bae2b582bdbf3472de6a57a0864a6f6" //Large Title
+const IOS16_SMALL_BOLD = "38b36044e6e4df8bb6c2ce73be0de894a2c42e9e"
+const IOS16_MEDIUM_BOLD = "544b7cedcb7958fdf7f50db1b0bec3c4b440aabf" 
+const IOS16_LARGE_BOLD = "2f9931dd5e8d36b293aad10c48d6c309f8af8b99"
+const IOS16_XLARGE_BOLD = "ebaa7681070b7692d2fd3de0aa58f51b408564b3"
+const IOS16_XXLARGE_BOLD = "0a9505c1fbdf1d22dad6badc31d69077b04b0e13"
+const IOS16_XXXLARGE_BOLD = "b44b10b5723f1b0ef97ed0d7bac85431cb25c3a1"
 const MD2_SMALL = "a443183c311be9703438ca0b8efb595d9f319aa4" //Caption
 const MD2_MEDIUM = "6b39bd500cc5c71f5dac4b3b56f74e924d582e39" //Body 2
 const MD2_LARGE = "4a64c8033dcc608fe9c88cb0850d0129eb866bc5" //Body 1
@@ -173,9 +185,10 @@ async function swap() {
         case MD3_SMALL:
         case IOS14_SMALL:
         case IOS15_SMALL:
+        case IOS16_SMALL:
           if (figma.command == "ios") {
             //...swap to 'Caption 1'.
-            await swapStyle(IOS15_SMALL)
+            await swapStyle(IOS16_SMALL)
           } else if (figma.command == "android") {
             //...swap to 'Caption'.
             await swapStyle(MD3_SMALL)
@@ -190,9 +203,10 @@ async function swap() {
         case MD3_MEDIUM:
         case IOS14_MEDIUM:
         case IOS15_MEDIUM:
+        case IOS16_MEDIUM:
           if (figma.command == "ios") {
             //...swap to 'Subhead'.
-            await swapStyle(IOS15_MEDIUM)
+            await swapStyle(IOS16_MEDIUM)
           } else if (figma.command == "android") {
             //...swap to 'Body 2'.
             await swapStyle(MD3_MEDIUM)
@@ -207,9 +221,10 @@ async function swap() {
         case MD3_LARGE:
         case IOS14_LARGE:
         case IOS15_LARGE:
+        case IOS16_LARGE:
           if (figma.command == "ios") {
             //...swap to 'Body'.
-            await swapStyle(IOS15_LARGE)
+            await swapStyle(IOS16_LARGE)
           } else if (figma.command == "android") {
             //...swap to 'Body 1'.
             await swapStyle(MD3_LARGE)
@@ -224,9 +239,10 @@ async function swap() {
         case MD3_XLARGE:
         case IOS14_XLARGE:
         case IOS15_XLARGE:
+        case IOS16_XLARGE:
           if (figma.command == "ios") {
             //...swap to 'Title 2'.
-            await swapStyle(IOS15_XLARGE)
+            await swapStyle(IOS16_XLARGE)
           } else if (figma.command == "android") {
             //...swap to 'Headline 6'.
             await swapStyle(MD3_XLARGE)
@@ -241,9 +257,10 @@ async function swap() {
         case MD3_XXLARGE:
         case IOS14_XXLARGE:
         case IOS15_XXLARGE:
+        case IOS16_XXLARGE:
           if (figma.command == "ios") {
             //...swap to 'Title 1'.
-            await swapStyle(IOS15_XXLARGE)
+            await swapStyle(IOS16_XXLARGE)
           } else if (figma.command == "android") {
             //...swap to 'Headline 5'.
             await swapStyle(MD3_XXLARGE)
@@ -258,9 +275,10 @@ async function swap() {
         case MD3_XXXLARGE:
         case IOS14_XXXLARGE:
         case IOS15_XXXLARGE:
+        case IOS16_XXXLARGE:
           if (figma.command == "ios") {
             //...swap to 'Large Title'.
-            await swapStyle(IOS15_XXXLARGE)
+            await swapStyle(IOS16_XXXLARGE)
           } else if (figma.command == "android") {
             //...swap to 'Headline 4'.
             await swapStyle(MD3_XXXLARGE)
@@ -275,9 +293,10 @@ async function swap() {
         case WEB_SMALL_BOLD:
         case IOS14_SMALL_BOLD:
         case IOS15_SMALL_BOLD:
+        case IOS16_SMALL_BOLD:
           if (figma.command == "ios") {
             //...swap to 'Caption 1'.
-            await swapStyle(IOS15_SMALL_BOLD)
+            await swapStyle(IOS16_SMALL_BOLD)
           } else if (figma.command == "android") {
             //...swap to '_'.
             await swapStyle(MD3_SMALL)
@@ -291,9 +310,10 @@ async function swap() {
         case WEB_MEDIUM_BOLD:
         case IOS14_MEDIUM_BOLD:
         case IOS15_MEDIUM_BOLD:
+        case IOS16_MEDIUM_BOLD:
           if (figma.command == "ios") {
             //...swap to 'Subhead'.
-            await swapStyle(IOS15_MEDIUM_BOLD)
+            await swapStyle(IOS16_MEDIUM_BOLD)
           } else if (figma.command == "android") {
             //...swap to '_'.
             await swapStyle(MD3_MEDIUM)
@@ -307,9 +327,10 @@ async function swap() {
         case WEB_LARGE_BOLD:
         case IOS14_LARGE_BOLD:
         case IOS15_LARGE_BOLD:
+        case IOS16_LARGE_BOLD:
           if (figma.command == "ios") {
             //...swap to 'Body'.
-            await swapStyle(IOS15_LARGE_BOLD)
+            await swapStyle(IOS16_LARGE_BOLD)
           } else if (figma.command == "android") {
             //...swap to '_'.
             await swapStyle(MD3_LARGE)
@@ -323,9 +344,10 @@ async function swap() {
         case WEB_XLARGE_BOLD:
         case IOS14_XLARGE_BOLD:
         case IOS15_XLARGE_BOLD:
+        case IOS16_XLARGE_BOLD:
           if (figma.command == "ios") {
             //...swap to 'Title 2'.
-            await swapStyle(IOS15_XLARGE_BOLD)
+            await swapStyle(IOS16_XLARGE_BOLD)
           } else if (figma.command == "android") {
             //...swap to '_'.
             await swapStyle(MD3_XLARGE)
@@ -339,9 +361,10 @@ async function swap() {
         case WEB_XXLARGE_BOLD:
         case IOS14_XXLARGE_BOLD:
         case IOS15_XXLARGE_BOLD:
+        case IOS16_XXLARGE_BOLD:
           if (figma.command == "ios") {
             //...swap to 'Title 1'.
-            await swapStyle(IOS15_XXLARGE_BOLD)
+            await swapStyle(IOS16_XXLARGE_BOLD)
           } else if (figma.command == "android") {
             //...swap to '_'.
             await swapStyle(MD3_XXLARGE)
@@ -355,9 +378,10 @@ async function swap() {
         case WEB_XXXLARGE_BOLD:
         case IOS14_XXXLARGE_BOLD:
         case IOS15_XXXLARGE_BOLD:
+        case IOS16_XXXLARGE_BOLD:
           if (figma.command == "ios") {
             //...swap to 'Large Title'.
-            await swapStyle(IOS15_XXXLARGE_BOLD)
+            await swapStyle(IOS16_XXXLARGE_BOLD)
           } else if (figma.command == "android") {
             //...swap to '_'.
             await swapStyle(MD3_XXXLARGE)
